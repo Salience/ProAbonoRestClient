@@ -72,7 +72,6 @@
     <Compile Include="DTO\Usage.cs" />
     <Compile Include="DTO\WebhookCallbackMessage.cs" />
     <Compile Include="Internal\Guard.cs" />
-    <Compile Include="IProAbonoClient.cs" />
     <Compile Include="ProAbonoClientRequests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProAbonoClient.cs">
