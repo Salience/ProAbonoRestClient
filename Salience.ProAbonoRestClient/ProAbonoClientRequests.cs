@@ -496,7 +496,7 @@ namespace ProAbono
             Guard.NotNullOrEmpty(referenceFeature, "referenceFeature");
 
             return To("estimate pricing of an usage update")
-                .Post("/v1/Pricing", r => r
+                .Post("/v1/PricingUsage", r => r
                     .AddBody(new
                     {
                         ReferenceFeature = referenceFeature,
@@ -525,7 +525,7 @@ namespace ProAbono
             Guard.NotNullOrEmpty(referenceFeature, "referenceFeature");
 
             return To("estimate pricing of an usage update")
-                .Post("/v1/Pricing", r => r
+                .Post("/v1/PricingUsage", r => r
                     .AddBody(new
                     {
                         ReferenceFeature = referenceFeature,
@@ -554,7 +554,7 @@ namespace ProAbono
             Guard.NotNullOrEmpty(referenceFeature, "referenceFeature");
 
             return To("estimate pricing of an usage update")
-                .Post("/v1/Pricing", r => r
+                .Post("/v1/PricingUsage", r => r
                     .AddBody(new
                     {
                         ReferenceFeature = referenceFeature,
@@ -596,8 +596,8 @@ namespace ProAbono
             Guard.NotNullOrEmpty(referenceCustomer, "referenceCustomer");
             Guard.NotNullOrEmpty(referenceOffer, "referenceOffer");
 
-            return To("estimate pricing of an usage update")
-                .Post("/v1/Pricing", r => r
+            return To("estimate pricing of a subscription upgrade")
+                .Post("/v1/PricingSubscription", r => r
                     .AddBody(new
                     {
                         ReferenceCustomer = referenceCustomer,
@@ -803,7 +803,7 @@ namespace ProAbono
         /// <param name="descriptionLocalized">Offer override - localized description</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        private IExecutableRequest<DetailedSubscription> CreateSubscriptionRequest(string referenceOffer, string referenceCustomer, string referenceCustomerBuyer = null, bool? tryStart = null, DateTime? dateStart = null, 
+        private IExecutableRequest<Subscription> CreateSubscriptionRequest(string referenceOffer, string referenceCustomer, string referenceCustomerBuyer = null, bool? tryStart = null, DateTime? dateStart = null, 
             int? amountUpFront = null, int? amountTrial = null, TimeUnit? unitTrial = null, int? durationTrial = null, int? amountRecurrence = null, TimeUnit? unitRecurrence = null, int? durationRecurrence = null, 
             int? countRecurrences = null, int? countMinRecurrences = null, int? amountTermination = null, string titleLocalized = null, string descriptionLocalized = null, bool? html = null)
         {
@@ -832,7 +832,7 @@ namespace ProAbono
                     ReferenceCustomerBuyer = referenceCustomerBuyer,
                     Html = html
                 }))
-                .Expecting<DetailedSubscription>();
+                .Expecting<Subscription>();
         }
 
         /// <summary>
@@ -841,13 +841,13 @@ namespace ProAbono
         /// <param name="idSubscription">id of the requested subscription</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        private IExecutableRequest<DetailedSubscription> RetrieveSubscriptionRequest(long idSubscription, bool? html = null)
+        private IExecutableRequest<Subscription> RetrieveSubscriptionRequest(long idSubscription, bool? html = null)
         {
             return To("retrieve a subscription")
                 .Get("/v1/Subscription", r => r
                     .AddParameter("IdSubscription", idSubscription, ParameterType.QueryString)
                     .AddParameter("Html", html, ParameterType.QueryString))
-                .Expecting<DetailedSubscription>()
+                .Expecting<Subscription>()
                 .OrDefaultIfNotFound();
         }
 
@@ -859,13 +859,13 @@ namespace ProAbono
         /// <param name="referenceCustomer">Customer whose subscription is requested. </param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        private IExecutableRequest<DetailedSubscription> RetrieveSubscriptionForCustomerRequest(string referenceCustomer, bool? html = null)
+        private IExecutableRequest<Subscription> RetrieveSubscriptionForCustomerRequest(string referenceCustomer, bool? html = null)
         {
             return To("retrieve a subscription for a customer")
                 .Get("/v1/Subscription", r => r
                     .AddParameter("referenceCustomer", referenceCustomer, ParameterType.QueryString)
                     .AddParameter("Html", html, ParameterType.QueryString))
-                .Expecting<DetailedSubscription>()
+                .Expecting<Subscription>()
                 .OrDefaultIfNotFound();
         }
 
@@ -876,14 +876,14 @@ namespace ProAbono
         /// <param name="subscriptionState">The subscription suspension status.</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        private IExecutableRequest<DetailedSubscription> SuspendSubscriptionRequest(long idSubscription, SubscriptionState subscriptionState = SubscriptionState.SuspendedAgent, bool? html = null)
+        private IExecutableRequest<Subscription> SuspendSubscriptionRequest(long idSubscription, SubscriptionState subscriptionState = SubscriptionState.SuspendedAgent, bool? html = null)
         {
             return To("suspend a subscription")
                 .Post("/v1/Subscription/{IdSubscription}/Suspension", r => r
                     .AddParameter("IdSubscription", idSubscription, ParameterType.UrlSegment)
                     .AddParameter("StateSubscription", subscriptionState, ParameterType.QueryString)
                     .AddParameter("Html", html, ParameterType.QueryString))
-                .Expecting<DetailedSubscription>();
+                .Expecting<Subscription>();
         }
 
         /// <summary>
@@ -892,13 +892,13 @@ namespace ProAbono
         /// <param name="idSubscription">id of the requested subscription</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        private IExecutableRequest<DetailedSubscription> StartSubscriptionRequest(long idSubscription, bool? html = null)
+        private IExecutableRequest<Subscription> StartSubscriptionRequest(long idSubscription, bool? html = null)
         {
             return To("start a subscription")
                 .Post("/v1/Subscription/{IdSubscription}/Start", r => r
                     .AddParameter("IdSubscription", idSubscription, ParameterType.UrlSegment)
                     .AddParameter("Html", html, ParameterType.QueryString))
-                .Expecting<DetailedSubscription>();
+                .Expecting<Subscription>();
         }
 
         /// <summary>
@@ -909,7 +909,7 @@ namespace ProAbono
         /// <param name="dateTermination">ignored if immediate is true. Date of termination, if you need to specify a date that is not the end of the billing period.</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        private IExecutableRequest<DetailedSubscription> TerminateSubscriptionRequest(long idSubscription, bool immediate = false, DateTime? dateTermination = null, bool? html = null)
+        private IExecutableRequest<Subscription> TerminateSubscriptionRequest(long idSubscription, bool immediate = false, DateTime? dateTermination = null, bool? html = null)
         {
             return To("terminate a subscription")
                 .Post("/v1/Subscription/{IdSubscription}/Termination", r => r
@@ -917,7 +917,7 @@ namespace ProAbono
                     .AddParameter("Immediate", immediate, ParameterType.QueryString)
                     .AddParameter("DateTermination", dateTermination, ParameterType.QueryString)
                     .AddParameter("Html", html, ParameterType.QueryString))
-                .Expecting<DetailedSubscription>();
+                .Expecting<Subscription>();
         }
 
         /// <summary>
@@ -927,7 +927,7 @@ namespace ProAbono
         /// <param name="referenceOffer">reference of the related offer</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        private IExecutableRequest<DetailedSubscription> UpgradeSubscriptionRequest(long idSubscription, string referenceOffer, bool? html = null)
+        private IExecutableRequest<Subscription> UpgradeSubscriptionRequest(long idSubscription, string referenceOffer, bool? html = null)
         {
             Guard.NotNullOrEmpty(referenceOffer, "referenceOffer");
 
@@ -936,7 +936,7 @@ namespace ProAbono
                     .AddParameter("IdSubscription", idSubscription, ParameterType.UrlSegment)
                     .AddParameter("ReferenceOffer", referenceOffer, ParameterType.QueryString)
                     .AddParameter("Html", html, ParameterType.QueryString))
-                .Expecting<DetailedSubscription>();
+                .Expecting<Subscription>();
         }
 
         /// <summary>
@@ -946,7 +946,7 @@ namespace ProAbono
         /// <param name="dateRenewal">the updated renewal date. Must be in the future</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        private IExecutableRequest<DetailedSubscription> UpdateSubscriptionRenewalDateRequest(long idSubscription, DateTime dateRenewal, bool? html = null)
+        private IExecutableRequest<Subscription> UpdateSubscriptionRenewalDateRequest(long idSubscription, DateTime dateRenewal, bool? html = null)
         {
             Guard.Future(dateRenewal, "dateRenewal");
 
@@ -955,7 +955,7 @@ namespace ProAbono
                     .AddParameter("IdSubscription", idSubscription, ParameterType.UrlSegment)
                     .AddParameter("DateRenewal", dateRenewal, ParameterType.QueryString)
                     .AddParameter("Html", html, ParameterType.QueryString))
-                .Expecting<DetailedSubscription>();
+                .Expecting<Subscription>();
         }
 
         /// <summary>

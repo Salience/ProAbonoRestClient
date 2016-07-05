@@ -374,7 +374,7 @@ namespace ProAbono
         /// <param name="descriptionLocalized">Offer override - localized description</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        DetailedSubscription CreateSubscription(string referenceOffer, string referenceCustomer, string referenceCustomerBuyer = null, bool? tryStart = null, DateTime? dateStart = null, int? amountUpFront = null, int? amountTrial = null, TimeUnit? unitTrial = null, int? durationTrial = null, int? amountRecurrence = null, TimeUnit? unitRecurrence = null, int? durationRecurrence = null, int? countRecurrences = null, int? countMinRecurrences = null, int? amountTermination = null, string titleLocalized = null, string descriptionLocalized = null, bool? html = null);
+        Subscription CreateSubscription(string referenceOffer, string referenceCustomer, string referenceCustomerBuyer = null, bool? tryStart = null, DateTime? dateStart = null, int? amountUpFront = null, int? amountTrial = null, TimeUnit? unitTrial = null, int? durationTrial = null, int? amountRecurrence = null, TimeUnit? unitRecurrence = null, int? durationRecurrence = null, int? countRecurrences = null, int? countMinRecurrences = null, int? amountTermination = null, string titleLocalized = null, string descriptionLocalized = null, bool? html = null);
 
         /// <summary>
         /// Retrieve a subscription
@@ -382,7 +382,7 @@ namespace ProAbono
         /// <param name="idSubscription">id of the requested subscription</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        DetailedSubscription RetrieveSubscription(long idSubscription, bool? html = null);
+        Subscription RetrieveSubscription(long idSubscription, bool? html = null);
 
         /// <summary>
         /// Retrieve a running subscription for a customer.
@@ -392,7 +392,7 @@ namespace ProAbono
         /// <param name="referenceCustomer">Customer whose subscription is requested. </param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        DetailedSubscription RetrieveSubscriptionForCustomer(string referenceCustomer, bool? html = null);
+        Subscription RetrieveSubscriptionForCustomer(string referenceCustomer, bool? html = null);
 
         /// <summary>
         /// Suspend a subscription
@@ -401,7 +401,7 @@ namespace ProAbono
         /// <param name="subscriptionState">The subscription suspension status.</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        DetailedSubscription SuspendSubscription(long idSubscription, SubscriptionState subscriptionState = SubscriptionState.SuspendedAgent, bool? html = null);
+        Subscription SuspendSubscription(long idSubscription, SubscriptionState subscriptionState = SubscriptionState.SuspendedAgent, bool? html = null);
 
         /// <summary>
         /// Start or restart a subscription
@@ -409,7 +409,7 @@ namespace ProAbono
         /// <param name="idSubscription">id of the requested subscription</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        DetailedSubscription StartSubscription(long idSubscription, bool? html = null);
+        Subscription StartSubscription(long idSubscription, bool? html = null);
 
         /// <summary>
         /// Terminate a subscription
@@ -419,7 +419,7 @@ namespace ProAbono
         /// <param name="dateTermination">ignored if immediate is true. Date of termination, if you need to specify a date that is not the end of the billing period.</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        DetailedSubscription TerminateSubscription(long idSubscription, bool immediate = false, DateTime? dateTermination = null, bool? html = null);
+        Subscription TerminateSubscription(long idSubscription, bool immediate = false, DateTime? dateTermination = null, bool? html = null);
 
         /// <summary>
         /// Upgrade a subscription
@@ -428,7 +428,7 @@ namespace ProAbono
         /// <param name="referenceOffer">reference of the related offer</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        DetailedSubscription UpgradeSubscription(long idSubscription, string referenceOffer, bool? html = null);
+        Subscription UpgradeSubscription(long idSubscription, string referenceOffer, bool? html = null);
 
         /// <summary>
         /// Change the renewal date of a subscription
@@ -437,7 +437,7 @@ namespace ProAbono
         /// <param name="dateRenewal">the updated renewal date. Must be in the future</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        DetailedSubscription UpdateSubscriptionRenewalDate(long idSubscription, DateTime dateRenewal, bool? html = null);
+        Subscription UpdateSubscriptionRenewalDate(long idSubscription, DateTime dateRenewal, bool? html = null);
 
         /// <summary>
         /// Retrieve a list of subscriptions
@@ -814,7 +814,7 @@ namespace ProAbono
         /// <param name="descriptionLocalized">Offer override - localized description</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        Task<DetailedSubscription> CreateSubscriptionAsync(string referenceOffer, string referenceCustomer, string referenceCustomerBuyer = null, bool? tryStart = null, DateTime? dateStart = null, int? amountUpFront = null, int? amountTrial = null, TimeUnit? unitTrial = null, int? durationTrial = null, int? amountRecurrence = null, TimeUnit? unitRecurrence = null, int? durationRecurrence = null, int? countRecurrences = null, int? countMinRecurrences = null, int? amountTermination = null, string titleLocalized = null, string descriptionLocalized = null, bool? html = null);
+        Task<Subscription> CreateSubscriptionAsync(string referenceOffer, string referenceCustomer, string referenceCustomerBuyer = null, bool? tryStart = null, DateTime? dateStart = null, int? amountUpFront = null, int? amountTrial = null, TimeUnit? unitTrial = null, int? durationTrial = null, int? amountRecurrence = null, TimeUnit? unitRecurrence = null, int? durationRecurrence = null, int? countRecurrences = null, int? countMinRecurrences = null, int? amountTermination = null, string titleLocalized = null, string descriptionLocalized = null, bool? html = null);
 
         /// <summary>
         /// Retrieve a subscription
@@ -822,7 +822,7 @@ namespace ProAbono
         /// <param name="idSubscription">id of the requested subscription</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        Task<DetailedSubscription> RetrieveSubscriptionAsync(long idSubscription, bool? html = null);
+        Task<Subscription> RetrieveSubscriptionAsync(long idSubscription, bool? html = null);
 
         /// <summary>
         /// Retrieve a running subscription for a customer.
@@ -832,7 +832,7 @@ namespace ProAbono
         /// <param name="referenceCustomer">Customer whose subscription is requested. </param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        Task<DetailedSubscription> RetrieveSubscriptionForCustomerAsync(string referenceCustomer, bool? html = null);
+        Task<Subscription> RetrieveSubscriptionForCustomerAsync(string referenceCustomer, bool? html = null);
 
         /// <summary>
         /// Suspend a subscription
@@ -841,7 +841,7 @@ namespace ProAbono
         /// <param name="subscriptionState">The subscription suspension status.</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        Task<DetailedSubscription> SuspendSubscriptionAsync(long idSubscription, SubscriptionState subscriptionState = SubscriptionState.SuspendedAgent, bool? html = null);
+        Task<Subscription> SuspendSubscriptionAsync(long idSubscription, SubscriptionState subscriptionState = SubscriptionState.SuspendedAgent, bool? html = null);
 
         /// <summary>
         /// Start or restart a subscription
@@ -849,7 +849,7 @@ namespace ProAbono
         /// <param name="idSubscription">id of the requested subscription</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        Task<DetailedSubscription> StartSubscriptionAsync(long idSubscription, bool? html = null);
+        Task<Subscription> StartSubscriptionAsync(long idSubscription, bool? html = null);
 
         /// <summary>
         /// Terminate a subscription
@@ -859,7 +859,7 @@ namespace ProAbono
         /// <param name="dateTermination">ignored if immediate is true. Date of termination, if you need to specify a date that is not the end of the billing period.</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        Task<DetailedSubscription> TerminateSubscriptionAsync(long idSubscription, bool immediate = false, DateTime? dateTermination = null, bool? html = null);
+        Task<Subscription> TerminateSubscriptionAsync(long idSubscription, bool immediate = false, DateTime? dateTermination = null, bool? html = null);
 
         /// <summary>
         /// Upgrade a subscription
@@ -868,7 +868,7 @@ namespace ProAbono
         /// <param name="referenceOffer">reference of the related offer</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        Task<DetailedSubscription> UpgradeSubscriptionAsync(long idSubscription, string referenceOffer, bool? html = null);
+        Task<Subscription> UpgradeSubscriptionAsync(long idSubscription, string referenceOffer, bool? html = null);
 
         /// <summary>
         /// Change the renewal date of a subscription
@@ -877,7 +877,7 @@ namespace ProAbono
         /// <param name="dateRenewal">the updated renewal date. Must be in the future</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        Task<DetailedSubscription> UpdateSubscriptionRenewalDateAsync(long idSubscription, DateTime dateRenewal, bool? html = null);
+        Task<Subscription> UpdateSubscriptionRenewalDateAsync(long idSubscription, DateTime dateRenewal, bool? html = null);
 
         /// <summary>
         /// Retrieve a list of subscriptions
@@ -1782,7 +1782,7 @@ namespace ProAbono
         /// <param name="descriptionLocalized">Offer override - localized description</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        public DetailedSubscription CreateSubscription(string referenceOffer, string referenceCustomer, string referenceCustomerBuyer = null, bool? tryStart = null, DateTime? dateStart = null, int? amountUpFront = null, int? amountTrial = null, TimeUnit? unitTrial = null, int? durationTrial = null, int? amountRecurrence = null, TimeUnit? unitRecurrence = null, int? durationRecurrence = null, int? countRecurrences = null, int? countMinRecurrences = null, int? amountTermination = null, string titleLocalized = null, string descriptionLocalized = null, bool? html = null)
+        public Subscription CreateSubscription(string referenceOffer, string referenceCustomer, string referenceCustomerBuyer = null, bool? tryStart = null, DateTime? dateStart = null, int? amountUpFront = null, int? amountTrial = null, TimeUnit? unitTrial = null, int? durationTrial = null, int? amountRecurrence = null, TimeUnit? unitRecurrence = null, int? durationRecurrence = null, int? countRecurrences = null, int? countMinRecurrences = null, int? amountTermination = null, string titleLocalized = null, string descriptionLocalized = null, bool? html = null)
         {
             return this.CreateSubscriptionRequest(referenceOffer, referenceCustomer, referenceCustomerBuyer, tryStart, dateStart, amountUpFront, amountTrial, unitTrial, durationTrial, amountRecurrence, unitRecurrence, durationRecurrence, countRecurrences, countMinRecurrences, amountTermination, titleLocalized, descriptionLocalized, html).Execute();
         }
@@ -1809,7 +1809,7 @@ namespace ProAbono
         /// <param name="descriptionLocalized">Offer override - localized description</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        public Task<DetailedSubscription> CreateSubscriptionAsync(string referenceOffer, string referenceCustomer, string referenceCustomerBuyer = null, bool? tryStart = null, DateTime? dateStart = null, int? amountUpFront = null, int? amountTrial = null, TimeUnit? unitTrial = null, int? durationTrial = null, int? amountRecurrence = null, TimeUnit? unitRecurrence = null, int? durationRecurrence = null, int? countRecurrences = null, int? countMinRecurrences = null, int? amountTermination = null, string titleLocalized = null, string descriptionLocalized = null, bool? html = null)
+        public Task<Subscription> CreateSubscriptionAsync(string referenceOffer, string referenceCustomer, string referenceCustomerBuyer = null, bool? tryStart = null, DateTime? dateStart = null, int? amountUpFront = null, int? amountTrial = null, TimeUnit? unitTrial = null, int? durationTrial = null, int? amountRecurrence = null, TimeUnit? unitRecurrence = null, int? durationRecurrence = null, int? countRecurrences = null, int? countMinRecurrences = null, int? amountTermination = null, string titleLocalized = null, string descriptionLocalized = null, bool? html = null)
         {
             return this.CreateSubscriptionRequest(referenceOffer, referenceCustomer, referenceCustomerBuyer, tryStart, dateStart, amountUpFront, amountTrial, unitTrial, durationTrial, amountRecurrence, unitRecurrence, durationRecurrence, countRecurrences, countMinRecurrences, amountTermination, titleLocalized, descriptionLocalized, html).ExecuteAsync();
         }
@@ -1820,7 +1820,7 @@ namespace ProAbono
         /// <param name="idSubscription">id of the requested subscription</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        public DetailedSubscription RetrieveSubscription(long idSubscription, bool? html = null)
+        public Subscription RetrieveSubscription(long idSubscription, bool? html = null)
         {
             return this.RetrieveSubscriptionRequest(idSubscription, html).Execute();
         }
@@ -1831,7 +1831,7 @@ namespace ProAbono
         /// <param name="idSubscription">id of the requested subscription</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        public Task<DetailedSubscription> RetrieveSubscriptionAsync(long idSubscription, bool? html = null)
+        public Task<Subscription> RetrieveSubscriptionAsync(long idSubscription, bool? html = null)
         {
             return this.RetrieveSubscriptionRequest(idSubscription, html).ExecuteAsync();
         }
@@ -1844,7 +1844,7 @@ namespace ProAbono
         /// <param name="referenceCustomer">Customer whose subscription is requested. </param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        public DetailedSubscription RetrieveSubscriptionForCustomer(string referenceCustomer, bool? html = null)
+        public Subscription RetrieveSubscriptionForCustomer(string referenceCustomer, bool? html = null)
         {
             return this.RetrieveSubscriptionForCustomerRequest(referenceCustomer, html).Execute();
         }
@@ -1857,7 +1857,7 @@ namespace ProAbono
         /// <param name="referenceCustomer">Customer whose subscription is requested. </param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        public Task<DetailedSubscription> RetrieveSubscriptionForCustomerAsync(string referenceCustomer, bool? html = null)
+        public Task<Subscription> RetrieveSubscriptionForCustomerAsync(string referenceCustomer, bool? html = null)
         {
             return this.RetrieveSubscriptionForCustomerRequest(referenceCustomer, html).ExecuteAsync();
         }
@@ -1869,7 +1869,7 @@ namespace ProAbono
         /// <param name="subscriptionState">The subscription suspension status.</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        public DetailedSubscription SuspendSubscription(long idSubscription, SubscriptionState subscriptionState = SubscriptionState.SuspendedAgent, bool? html = null)
+        public Subscription SuspendSubscription(long idSubscription, SubscriptionState subscriptionState = SubscriptionState.SuspendedAgent, bool? html = null)
         {
             return this.SuspendSubscriptionRequest(idSubscription, subscriptionState, html).Execute();
         }
@@ -1881,7 +1881,7 @@ namespace ProAbono
         /// <param name="subscriptionState">The subscription suspension status.</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        public Task<DetailedSubscription> SuspendSubscriptionAsync(long idSubscription, SubscriptionState subscriptionState = SubscriptionState.SuspendedAgent, bool? html = null)
+        public Task<Subscription> SuspendSubscriptionAsync(long idSubscription, SubscriptionState subscriptionState = SubscriptionState.SuspendedAgent, bool? html = null)
         {
             return this.SuspendSubscriptionRequest(idSubscription, subscriptionState, html).ExecuteAsync();
         }
@@ -1892,7 +1892,7 @@ namespace ProAbono
         /// <param name="idSubscription">id of the requested subscription</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        public DetailedSubscription StartSubscription(long idSubscription, bool? html = null)
+        public Subscription StartSubscription(long idSubscription, bool? html = null)
         {
             return this.StartSubscriptionRequest(idSubscription, html).Execute();
         }
@@ -1903,7 +1903,7 @@ namespace ProAbono
         /// <param name="idSubscription">id of the requested subscription</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        public Task<DetailedSubscription> StartSubscriptionAsync(long idSubscription, bool? html = null)
+        public Task<Subscription> StartSubscriptionAsync(long idSubscription, bool? html = null)
         {
             return this.StartSubscriptionRequest(idSubscription, html).ExecuteAsync();
         }
@@ -1916,7 +1916,7 @@ namespace ProAbono
         /// <param name="dateTermination">ignored if immediate is true. Date of termination, if you need to specify a date that is not the end of the billing period.</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        public DetailedSubscription TerminateSubscription(long idSubscription, bool immediate = false, DateTime? dateTermination = null, bool? html = null)
+        public Subscription TerminateSubscription(long idSubscription, bool immediate = false, DateTime? dateTermination = null, bool? html = null)
         {
             return this.TerminateSubscriptionRequest(idSubscription, immediate, dateTermination, html).Execute();
         }
@@ -1929,7 +1929,7 @@ namespace ProAbono
         /// <param name="dateTermination">ignored if immediate is true. Date of termination, if you need to specify a date that is not the end of the billing period.</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        public Task<DetailedSubscription> TerminateSubscriptionAsync(long idSubscription, bool immediate = false, DateTime? dateTermination = null, bool? html = null)
+        public Task<Subscription> TerminateSubscriptionAsync(long idSubscription, bool immediate = false, DateTime? dateTermination = null, bool? html = null)
         {
             return this.TerminateSubscriptionRequest(idSubscription, immediate, dateTermination, html).ExecuteAsync();
         }
@@ -1941,7 +1941,7 @@ namespace ProAbono
         /// <param name="referenceOffer">reference of the related offer</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        public DetailedSubscription UpgradeSubscription(long idSubscription, string referenceOffer, bool? html = null)
+        public Subscription UpgradeSubscription(long idSubscription, string referenceOffer, bool? html = null)
         {
             return this.UpgradeSubscriptionRequest(idSubscription, referenceOffer, html).Execute();
         }
@@ -1953,7 +1953,7 @@ namespace ProAbono
         /// <param name="referenceOffer">reference of the related offer</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        public Task<DetailedSubscription> UpgradeSubscriptionAsync(long idSubscription, string referenceOffer, bool? html = null)
+        public Task<Subscription> UpgradeSubscriptionAsync(long idSubscription, string referenceOffer, bool? html = null)
         {
             return this.UpgradeSubscriptionRequest(idSubscription, referenceOffer, html).ExecuteAsync();
         }
@@ -1965,7 +1965,7 @@ namespace ProAbono
         /// <param name="dateRenewal">the updated renewal date. Must be in the future</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        public DetailedSubscription UpdateSubscriptionRenewalDate(long idSubscription, DateTime dateRenewal, bool? html = null)
+        public Subscription UpdateSubscriptionRenewalDate(long idSubscription, DateTime dateRenewal, bool? html = null)
         {
             return this.UpdateSubscriptionRenewalDateRequest(idSubscription, dateRenewal, html).Execute();
         }
@@ -1977,7 +1977,7 @@ namespace ProAbono
         /// <param name="dateRenewal">the updated renewal date. Must be in the future</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        public Task<DetailedSubscription> UpdateSubscriptionRenewalDateAsync(long idSubscription, DateTime dateRenewal, bool? html = null)
+        public Task<Subscription> UpdateSubscriptionRenewalDateAsync(long idSubscription, DateTime dateRenewal, bool? html = null)
         {
             return this.UpdateSubscriptionRenewalDateRequest(idSubscription, dateRenewal, html).ExecuteAsync();
         }
