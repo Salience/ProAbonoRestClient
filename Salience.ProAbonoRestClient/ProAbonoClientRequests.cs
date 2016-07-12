@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using Salience.FluentApi;
-using ProAbono.Internal;
+using Salience.FluentApi.Internal;
 
 namespace ProAbono
 {
@@ -28,6 +30,34 @@ namespace ProAbono
             this.SetAuthenticator(new HttpBasicAuthenticator(agentKey, apiKey));
         }
 
+        protected override void HandleUnexpectedResponse(RequestData data)
+        {
+            var response = data.Response;
+            if(response.ContentLength == 0)
+                return;
+
+            // deserialize error(s)
+            Error[] errors;
+            try
+            {
+                using(var reader = new StringReader(response.Content))
+                {
+                    var jsonReader = new JsonTextReader(reader);
+                    if((int)response.StatusCode == 422)
+                        errors = this.Serializer.Deserialize<Error[]>(jsonReader);
+                    else
+                        errors = new[] { this.Serializer.Deserialize<Error>(jsonReader) };
+                }
+            }
+            catch(Exception)
+            {
+                errors = null;
+            }
+
+            if(errors != null && errors.Any())
+                throw new ProAbonoException((int)response.StatusCode, errors);
+        }
+
         #region Features
         /// <summary>
         /// Retrieve a feature
@@ -47,8 +77,7 @@ namespace ProAbono
                     .AddParameter("ReferenceSegment", referenceSegment, ParameterType.QueryString)
                     .AddParameter("Language", language, ParameterType.QueryString)
                     .AddParameter("Html", html, ParameterType.QueryString))
-                .Expecting<Feature>()
-                .OrDefaultIfNotFound();
+                .Expecting<Feature>();
         }
 
         /// <summary>
@@ -70,8 +99,7 @@ namespace ProAbono
                     .AddParameter("ReferenceCustomer", referenceCustomer, ParameterType.QueryString)
                     .AddParameter("Language", language, ParameterType.QueryString)
                     .AddParameter("Html", html, ParameterType.QueryString))
-                .Expecting<Feature>()
-                .OrDefaultIfNotFound();
+                .Expecting<Feature>();
         }
 
         /// <summary>
@@ -95,7 +123,7 @@ namespace ProAbono
                     .AddParameter("Page", page, ParameterType.QueryString)
                     .AddParameter("SizePage", sizePage, ParameterType.QueryString))
                 .Expecting<PaginatedList<Feature>>()
-                .OrDefaultIfNotFound();
+                .Or(new PaginatedList<Feature>()).IfNoContent();
         }
 
         /// <summary>
@@ -119,7 +147,7 @@ namespace ProAbono
                     .AddParameter("Page", page, ParameterType.QueryString)
                     .AddParameter("SizePage", sizePage, ParameterType.QueryString))
                 .Expecting<PaginatedList<Feature>>()
-                .OrDefaultIfNotFound();
+                .Or(new PaginatedList<Feature>()).IfNoContent();
         }
         #endregion
 
@@ -159,8 +187,7 @@ namespace ProAbono
 
             return To("retrieve a customer")
                 .Get("/v1/Customer", r => r.AddParameter("ReferenceCustomer", referenceCustomer, ParameterType.QueryString))
-                .Expecting<Customer>()
-                .OrDefaultIfNotFound();
+                .Expecting<Customer>();
         }
 
         /// <summary>
@@ -177,7 +204,8 @@ namespace ProAbono
                     .AddParameter("ReferenceSegment", referenceSegment, ParameterType.QueryString)
                     .AddParameter("Page", page, ParameterType.QueryString)
                     .AddParameter("SizePage", sizePage, ParameterType.QueryString))
-                .Expecting((PaginatedList<Customer> list) => list ?? new PaginatedList<Customer>());
+                .Expecting<PaginatedList<Customer>>()
+                .Or(new PaginatedList<Customer>()).IfNoContent();
         }
 
         /// <summary>
@@ -198,7 +226,8 @@ namespace ProAbono
                     .AddParameter("ReferenceSegment", referenceSegment, ParameterType.QueryString)
                     .AddParameter("Page", page, ParameterType.QueryString)
                     .AddParameter("SizePage", sizePage, ParameterType.QueryString))
-                .Expecting((PaginatedList<CustomerWithUsage> list) => list ?? new PaginatedList<CustomerWithUsage>());
+                .Expecting<PaginatedList<CustomerWithUsage>>()
+                .Or(new PaginatedList<CustomerWithUsage>()).IfNoContent();
         }
 
         /// <summary>
@@ -212,8 +241,7 @@ namespace ProAbono
 
             return To("retrieve a billing address")
                 .Get("/v1/CustomerBillingAddress", r => r.AddParameter("ReferenceCustomer", referenceCustomer, ParameterType.QueryString))
-                .Expecting<Address>()
-                .OrDefaultIfNotFound();
+                .Expecting<Address>();
         }
 
         /// <summary>
@@ -245,8 +273,7 @@ namespace ProAbono
 
             return To("retrieve a shipping address")
                 .Get("/v1/CustomerShippingAddress", r => r.AddParameter("ReferenceCustomer", referenceCustomer, ParameterType.QueryString))
-                .Expecting<Address>()
-                .OrDefaultIfNotFound();
+                .Expecting<Address>();
         }
 
         /// <summary>
@@ -278,8 +305,7 @@ namespace ProAbono
 
             return To("retrieve payment settings")
                 .Get("/v1/CustomerSettingsPayment", r => r.AddParameter("ReferenceCustomer", referenceCustomer, ParameterType.QueryString))
-                .Expecting<PaymentSettings>()
-                .OrDefaultIfNotFound();
+                .Expecting<PaymentSettings>();
         }
 
         /// <summary>
@@ -322,7 +348,8 @@ namespace ProAbono
                     .AddParameter("Aggregate", aggregate, ParameterType.QueryString)
                     .AddParameter("Page", page, ParameterType.QueryString)
                     .AddParameter("SizePage", sizePage, ParameterType.QueryString))
-                .Expecting<PaginatedList<Usage>>();
+                .Expecting<PaginatedList<Usage>>()
+                .Or(new PaginatedList<Usage>()).IfNoContent();
         }
 
         /// <summary>
@@ -339,7 +366,8 @@ namespace ProAbono
                     .AddParameter("IdSubscription", idSubscription, ParameterType.QueryString)
                     .AddParameter("Page", page, ParameterType.QueryString)
                     .AddParameter("SizePage", sizePage, ParameterType.QueryString))
-                .Expecting<PaginatedList<Usage>>();
+                .Expecting<PaginatedList<Usage>>()
+                .Or(new PaginatedList<Usage>()).IfNoContent();
         }
 
         /// <summary>
@@ -358,7 +386,8 @@ namespace ProAbono
                     .AddParameter("Aggregate", aggregate, ParameterType.QueryString)
                     .AddParameter("Page", page, ParameterType.QueryString)
                     .AddParameter("SizePage", sizePage, ParameterType.QueryString))
-                .Expecting<PaginatedList<Usage>>();
+                .Expecting<PaginatedList<Usage>>()
+                .Or(new PaginatedList<Usage>()).IfNoContent();
         }
 
         /// <summary>
@@ -644,8 +673,7 @@ namespace ProAbono
                     .AddParameter("Html", html, ParameterType.QueryString)
                     .AddParameter("IgnoreFeatures", ignoreFeatures, ParameterType.QueryString)
                     .AddParameter("Links", links, ParameterType.QueryString))
-                .Expecting<Offer>()
-                .OrDefaultIfNotFound();
+                .Expecting<Offer>();
         }
 
         /// <summary>
@@ -669,8 +697,7 @@ namespace ProAbono
                     .AddParameter("Html", html, ParameterType.QueryString)
                     .AddParameter("IgnoreFeatures", ignoreFeatures, ParameterType.QueryString)
                     .AddParameter("IsVisible", isVisible, ParameterType.QueryString))
-                .Expecting<Offer>()
-                .OrDefaultIfNotFound();
+                .Expecting<Offer>();
         }
 
         /// <summary>
@@ -697,7 +724,8 @@ namespace ProAbono
                     .AddParameter("Links", links, ParameterType.QueryString)
                     .AddParameter("Page", page, ParameterType.QueryString)
                     .AddParameter("SizePage", sizePage, ParameterType.QueryString))
-                .Expecting((PaginatedList<Offer> list) => list ?? new PaginatedList<Offer>());
+                .Expecting<PaginatedList<Offer>>()
+                .Or(new PaginatedList<Offer>()).IfNoContent();
         }
 
         /// <summary>
@@ -722,7 +750,8 @@ namespace ProAbono
                     .AddParameter("IgnoreFeatures", ignoreFeatures, ParameterType.QueryString)
                     .AddParameter("Page", page, ParameterType.QueryString)
                     .AddParameter("SizePage", sizePage, ParameterType.QueryString))
-                .Expecting((PaginatedList<Offer> list) => list ?? new PaginatedList<Offer>());
+                .Expecting<PaginatedList<Offer>>()
+                .Or(new PaginatedList<Offer>()).IfNoContent();
         }
 
         /// <summary>
@@ -747,8 +776,7 @@ namespace ProAbono
                     .AddParameter("IdSubscription", idSubscription, ParameterType.QueryString)
                     .AddParameter("Html", html, ParameterType.QueryString)
                     .AddParameter("IgnoreFeatures", ignoreFeatures, ParameterType.QueryString))
-                .Expecting<Offer>()
-                .OrDefaultIfNotFound();
+                .Expecting<Offer>();
         }
 
         /// <summary>
@@ -776,7 +804,8 @@ namespace ProAbono
                     .AddParameter("IgnoreFeatures", ignoreFeatures, ParameterType.QueryString)
                     .AddParameter("Page", page, ParameterType.QueryString)
                     .AddParameter("SizePage", sizePage, ParameterType.QueryString))
-                .Expecting((PaginatedList<Offer> list) => list ?? new PaginatedList<Offer>());
+                .Expecting<PaginatedList<Offer>>()
+                .Or(new PaginatedList<Offer>()).IfNoContent();
         }
         #endregion
 
@@ -848,7 +877,7 @@ namespace ProAbono
                     .AddParameter("IdSubscription", idSubscription, ParameterType.QueryString)
                     .AddParameter("Html", html, ParameterType.QueryString))
                 .Expecting<Subscription>()
-                .OrDefaultIfNotFound();
+                .Or(null).IfNotFound();
         }
 
         /// <summary>
@@ -865,8 +894,7 @@ namespace ProAbono
                 .Get("/v1/Subscription", r => r
                     .AddParameter("referenceCustomer", referenceCustomer, ParameterType.QueryString)
                     .AddParameter("Html", html, ParameterType.QueryString))
-                .Expecting<Subscription>()
-                .OrDefaultIfNotFound();
+                .Expecting<Subscription>();
         }
 
         /// <summary>
@@ -979,7 +1007,8 @@ namespace ProAbono
                     .AddParameter("Html", html, ParameterType.QueryString)
                     .AddParameter("Page", page, ParameterType.QueryString)
                     .AddParameter("SizePage", sizePage, ParameterType.QueryString))
-                .Expecting((PaginatedList<Subscription> list) => list ?? new PaginatedList<Subscription>());
+                .Expecting<PaginatedList<Subscription>>()
+                .Or(new PaginatedList<Subscription>()).IfNoContent();
         }
         #endregion
     }

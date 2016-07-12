@@ -41,8 +41,8 @@
       <HintPath>..\..\..\packages\RestSharp.105.0.1\lib\net4\RestSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Salience.FluentApi, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Salience.FluentApi.1.4.0\lib\net45\Salience.FluentApi.dll</HintPath>
+    <Reference Include="Salience.FluentApi, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Salience.FluentApi.1.6.0\lib\net45\Salience.FluentApi.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -71,8 +71,9 @@
     <Compile Include="DTO\TimeUnit.cs" />
     <Compile Include="DTO\Usage.cs" />
     <Compile Include="DTO\WebhookCallbackMessage.cs" />
-    <Compile Include="Internal\Guard.cs" />
+    <Compile Include="DTO\Error.cs" />
     <Compile Include="ProAbonoClientRequests.cs" />
+    <Compile Include="ProAbonoException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProAbonoClient.cs">
       <AutoGen>True</AutoGen>

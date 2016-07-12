@@ -8,6 +8,7 @@ namespace ProAbono
         public PaginatedList()
         {
             this.Items = new List<T>();
+            this.DateGenerated = DateTime.UtcNow;
         }
 
         public int Page { get; set; }
