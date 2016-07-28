@@ -769,7 +769,7 @@ namespace ProAbono
             Guard.NotNullOrEmpty(referenceOffer, "referenceOffer");
 
             return To("retrieve offers to upgrade a customer")
-                .Get("/v1/Offers", r => r
+                .Get("/v1/Offer", r => r
                     .AddParameter("ReferenceCustomer", referenceCustomer, ParameterType.QueryString)
                     .AddParameter("ReferenceOffer", referenceOffer, ParameterType.QueryString)
                     .AddParameter("Upgrade", true, ParameterType.QueryString)
