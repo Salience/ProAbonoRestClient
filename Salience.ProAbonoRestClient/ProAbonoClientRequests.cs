@@ -901,10 +901,10 @@ namespace ProAbono
         /// Suspend a subscription
         /// </summary>
         /// <param name="idSubscription">id of the requested subscription</param>
-        /// <param name="subscriptionState">The subscription suspension status.</param>
+        /// <param name="subscriptionState">The subscription suspension status. default: SuspendedAgent</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        private IExecutableRequest<Subscription> SuspendSubscriptionRequest(long idSubscription, SubscriptionState subscriptionState = SubscriptionState.SuspendedAgent, bool? html = null)
+        private IExecutableRequest<Subscription> SuspendSubscriptionRequest(long idSubscription, string subscriptionState = null, bool? html = null)
         {
             return To("suspend a subscription")
                 .Post("/v1/Subscription/{IdSubscription}/Suspension", r => r

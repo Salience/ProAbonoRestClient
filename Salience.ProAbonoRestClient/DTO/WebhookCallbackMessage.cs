@@ -38,7 +38,7 @@ namespace ProAbono
     {
         public int Id { get; set; }
         public int IdSegment { get; set; }
-        public SubscriptionState StateSubscription { get; set; }
+        public string StateSubscription { get; set; }
         public DateTime DateStart { get; set; }
         public int AmountRecurrence { get; set; }
         public int DurationRecurrence { get; set; }

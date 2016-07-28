@@ -14,12 +14,12 @@ namespace ProAbono
         public string ReferenceOffer { get; set; }
         public string ReferenceCustomer { get; set; }
         public string ReferenceCustomerBuyer { get; set; }
-        public SubscriptionState StateSubscription { get; set; }
+        public string StateSubscription { get; set; }
         public DateTime? DateStart { get; set; }
         public DateTime? DatePeriodStart { get; set; }
         public DateTime? DatePeriodEnd { get; set; }
         public DateTime? DateTerm { get; set; }
-        public SubscriptionState StateSubscriptionAfterTerm { get; set; }
+        public string StateSubscriptionAfterTerm { get; set; }
         public bool IsTrial { get; set; }
         public bool IsEngaged { get; set; }
         public bool IsCustomerBillable { get; set; }

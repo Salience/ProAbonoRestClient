@@ -398,10 +398,10 @@ namespace ProAbono
         /// Suspend a subscription
         /// </summary>
         /// <param name="idSubscription">id of the requested subscription</param>
-        /// <param name="subscriptionState">The subscription suspension status.</param>
+        /// <param name="subscriptionState">The subscription suspension status. default: SuspendedAgent</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        Subscription SuspendSubscription(long idSubscription, SubscriptionState subscriptionState = SubscriptionState.SuspendedAgent, bool? html = null);
+        Subscription SuspendSubscription(long idSubscription, string subscriptionState = null, bool? html = null);
 
         /// <summary>
         /// Start or restart a subscription
@@ -838,10 +838,10 @@ namespace ProAbono
         /// Suspend a subscription
         /// </summary>
         /// <param name="idSubscription">id of the requested subscription</param>
-        /// <param name="subscriptionState">The subscription suspension status.</param>
+        /// <param name="subscriptionState">The subscription suspension status. default: SuspendedAgent</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        Task<Subscription> SuspendSubscriptionAsync(long idSubscription, SubscriptionState subscriptionState = SubscriptionState.SuspendedAgent, bool? html = null);
+        Task<Subscription> SuspendSubscriptionAsync(long idSubscription, string subscriptionState = null, bool? html = null);
 
         /// <summary>
         /// Start or restart a subscription
@@ -1866,10 +1866,10 @@ namespace ProAbono
         /// Suspend a subscription
         /// </summary>
         /// <param name="idSubscription">id of the requested subscription</param>
-        /// <param name="subscriptionState">The subscription suspension status.</param>
+        /// <param name="subscriptionState">The subscription suspension status. default: SuspendedAgent</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        public Subscription SuspendSubscription(long idSubscription, SubscriptionState subscriptionState = SubscriptionState.SuspendedAgent, bool? html = null)
+        public Subscription SuspendSubscription(long idSubscription, string subscriptionState = null, bool? html = null)
         {
             return this.SuspendSubscriptionRequest(idSubscription, subscriptionState, html).Execute();
         }
@@ -1878,10 +1878,10 @@ namespace ProAbono
         /// Suspend a subscription
         /// </summary>
         /// <param name="idSubscription">id of the requested subscription</param>
-        /// <param name="subscriptionState">The subscription suspension status.</param>
+        /// <param name="subscriptionState">The subscription suspension status. default: SuspendedAgent</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        public Task<Subscription> SuspendSubscriptionAsync(long idSubscription, SubscriptionState subscriptionState = SubscriptionState.SuspendedAgent, bool? html = null)
+        public Task<Subscription> SuspendSubscriptionAsync(long idSubscription, string subscriptionState = null, bool? html = null)
         {
             return this.SuspendSubscriptionRequest(idSubscription, subscriptionState, html).ExecuteAsync();
         }

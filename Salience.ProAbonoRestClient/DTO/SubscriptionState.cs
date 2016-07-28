@@ -1,97 +1,93 @@
 namespace ProAbono
 {
-    public enum SubscriptionState
+    public static class SubscriptionState
     {
         /// <summary>
-        /// Subscription has been initiated in the hosted pages
-        /// The customer did not choose a payment mode
+        /// The subscription has been initiated in the hosted pages.
+        /// The customer has not chosen a payment mode yet.
         /// </summary>
-        InitiatedCustomer,
+        public const string InitiatedCustomer = "InitiatedCustomer";
 
         /// <summary>
-        /// Subscription has been initiated in the agent pages (the backoffice)
-        /// The customer did not choose a payment mode
+        /// The subscription has been initiated in the agent pages (the backoffice).
+        /// The customer has not chosen a payment mode yet.
         /// </summary>
-        InitiatedAgent,
+        public const string InitiatedAgent = "InitiatedAgent";
 
         /// <summary>
-        /// Subscription has been registered and will start with a delay
-        /// The user reached the payment step, but no payment occured
+        /// The subscription has been registered and will start with a delay.
+        /// The user reached the payment step, but no payment occured yet.
         /// </summary>
-        Delayed,
+        public const string Delayed = "Delayed";
 
         /// <summary>
-        /// Subscription has been concluded
-        /// It is currently active
+        /// The subscription has been concluded and is currently active..
         /// </summary>
-        Running,
+        public const string Running = "Running";
 
         /// <summary>
-        /// Subscription has been suspended by it's owner
+        /// The subscription has been suspended by its owner.
         /// </summary>
-        SuspendedCustomer,
+        public const string SuspendedCustomer = "SuspendedCustomer";
 
         /// <summary>
-        /// Subscription has been suspended because payment settings are missing
+        /// The subscription has been suspended because the payment settings are missing.
         /// </summary>
-        SuspendedPaymentInfoMissing,
+        public const string SuspendedPaymentInfoMissing = "SuspendedPaymentInfoMissing";
 
         /// <summary>
-        /// Subscription has been suspended because a payment is due
+        /// The subscription has been suspended because a payment is due.
         /// </summary>
-        SuspendedPaymentDue,
+        public const string SuspendedPaymentDue = "SuspendedPaymentDue";
 
         /// <summary>
-        /// Subscription has been suspended by a business administrator
+        /// The subscription has been suspended by an administrator.
         /// </summary>
-        SuspendedAgent,
+        public const string SuspendedAgent = "SuspendedAgent";
 
         /// <summary>
-        /// Subscription has been suspended by the system
+        /// The subscription has been suspended by the system.
         /// </summary>
-        SuspendedSystem,
+        public const string SuspendedSystem = "SuspendedSystem";
 
         /// <summary>
-        /// Subscription has been concluded
-        /// Subscription is over now, but the user can still access the features while the term is not reached
+        /// The subscription is over.
         /// </summary>
-        History,
+        public const string History = "History";
 
         /// <summary>
-        /// Subscription has been terminated
-        /// The subscription is over, but the user can still access the features while the term is not reached
-        /// no update can be done anymore
+        /// The subscription has been terminated.
         /// </summary>
-        Terminated,
-        /// <summary>
-        /// Subscription has been terminated
-        /// The subscription is over, but the user can still access the features while the term is not reached
-        /// no update can be done anymore
-        /// </summary>
-        TerminatedCustomer,
-        /// <summary>
-        /// Subscription has been terminated by an administrator
-        /// The subscription is over, but the user can still access the features while the term is not reached
-        /// no update can be done anymore
-        /// </summary>
-        TerminatedAgent,
+        public const string Terminated = "Terminated";
 
         /// <summary>
-        /// Subscription has been terminated
-        /// The subscription is over, the user cannot access the features anymore
-        /// no update can be done anymore
+        /// The subscription will been terminated at the end of the current period.
         /// </summary>
-        TerminatedRevokedCustomer,
-        /// <summary>
-        /// Subscription has been terminated by an administrator
-        /// The subscription is over, the user cannot access the features anymore
-        /// no update can be done anymore
-        /// </summary>
-        TerminatedRevokedAgent,
+        public const string TerminatedAtRenewal = "TerminatedAtRenewal";
 
         /// <summary>
-        /// Subscription has been deleted
+        /// The subscription has been terminated by the customer.
         /// </summary>
-        Deleted,
+        public const string TerminatedCustomer = "TerminatedCustomer";
+
+        /// <summary>
+        /// The subscription has been terminated by an administrator..
+         /// </summary>
+        public const string TerminatedAgent = "TerminatedAgent";
+
+        /// <summary>
+        /// The subscription has been terminated by the customer.
+        /// </summary>
+        public const string TerminatedRevokedCustomer = "TerminatedRevokedCustomer";
+
+        /// <summary>
+        /// The subscription has been terminated by an administrator.
+        /// </summary>
+        public const string TerminatedRevokedAgent = "TerminatedRevokedAgent";
+
+        /// <summary>
+        /// The subscription has been deleted
+        /// </summary>
+        public const string Deleted = "Deleted";
     }
 }
