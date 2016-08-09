@@ -9,6 +9,7 @@ namespace ProAbono
         public int IdBusiness { get; set; }
         public int IdWebhook { get; set; }
         public string ReferenceSegment { get; set; }
+        public string Currency { get; set; }
         public DateTime DateTrigger { get; set; }
         public string TypeTrigger { get; set; }
         public WebhookCallbackMessageCustomer Customer { get; set; }
