@@ -816,7 +816,8 @@ namespace ProAbono
         /// <param name="referenceOffer">reference of the related offer, required if idOffer is null</param>
         /// <param name="referenceCustomer">(mandatory) reference of related customer</param>
         /// <param name="referenceCustomerBuyer">reference of related buyer, if the buyer is not the recipient of the subscription</param>
-        /// <param name="tryStart">if true, will check if the customer is billable. if he's not then an error is returned</param>
+        /// <param name="tryStart">if true, will force the start of the new subscription. An error is returned if the offer isn't free and the customer isn't billable.</param>
+        /// <param name="ensureBillable">if true, will check if the customer is billable. If he's not then an error is returned</param>
         /// <param name="dateStart">specify the subscription's start date</param>
         /// <param name="amountUpFront">Offer override - upfront amount </param>
         /// <param name="amountTrial">Offer override - trial period amount</param>
@@ -832,7 +833,7 @@ namespace ProAbono
         /// <param name="descriptionLocalized">Offer override - localized description</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        private IExecutableRequest<Subscription> CreateSubscriptionRequest(string referenceOffer, string referenceCustomer, string referenceCustomerBuyer = null, bool? tryStart = null, DateTime? dateStart = null, 
+        private IExecutableRequest<Subscription> CreateSubscriptionRequest(string referenceOffer, string referenceCustomer, string referenceCustomerBuyer = null, bool? tryStart = null, bool? ensureBillable = null, DateTime? dateStart = null, 
             int? amountUpFront = null, int? amountTrial = null, TimeUnit? unitTrial = null, int? durationTrial = null, int? amountRecurrence = null, TimeUnit? unitRecurrence = null, int? durationRecurrence = null, 
             int? countRecurrences = null, int? countMinRecurrences = null, int? amountTermination = null, string titleLocalized = null, string descriptionLocalized = null, bool? html = null)
         {
@@ -840,11 +841,13 @@ namespace ProAbono
             Guard.NotNullOrEmpty(referenceOffer, "referenceOffer");
 
             return To("create a subscription")
-                .Post("/v1/Subscription", r => r.AddBody(new
+                .Post("/v1/Subscription", r => r
+                    .AddParameter("tryStart", tryStart, ParameterType.QueryString)
+                    .AddParameter("ensureBillable", ensureBillable, ParameterType.QueryString)
+                    .AddBody(new
                 {
                     ReferenceCustomer = referenceCustomer,
                     ReferenceOffer = referenceOffer,
-                    TryStart = tryStart,
                     DateStart = dateStart,
                     AmountUpFront = amountUpFront,
                     AmountTrial = amountTrial,
@@ -968,20 +971,20 @@ namespace ProAbono
         }
 
         /// <summary>
-        /// Change the renewal date of a subscription
+        /// Change the term date of a subscription
         /// </summary>
         /// <param name="idSubscription">id of the requested subscription</param>
-        /// <param name="dateRenewal">the updated renewal date. Must be in the future</param>
+        /// <param name="dateTerm">the updated term date. Must be in the future</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        private IExecutableRequest<Subscription> UpdateSubscriptionRenewalDateRequest(long idSubscription, DateTime dateRenewal, bool? html = null)
+        private IExecutableRequest<Subscription> UpdateSubscriptionRenewalDateRequest(long idSubscription, DateTime dateTerm, bool? html = null)
         {
-            Guard.Future(dateRenewal, "dateRenewal");
+            Guard.Future(dateTerm, "dateTerm");
 
             return To("change the renewal date of a subscription")
-                .Post("/v1/Subscription/{IdSubscription}/DateRenewal", r => r
+                .Post("/v1/Subscription/{IdSubscription}/DateTerm", r => r
                     .AddParameter("IdSubscription", idSubscription, ParameterType.UrlSegment)
-                    .AddParameter("DateRenewal", dateRenewal, ParameterType.QueryString)
+                    .AddParameter("DateTerm", dateTerm, ParameterType.QueryString)
                     .AddParameter("Html", html, ParameterType.QueryString))
                 .Expecting<Subscription>();
         }
