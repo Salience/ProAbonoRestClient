@@ -358,7 +358,8 @@ namespace ProAbono
         /// <param name="referenceOffer">reference of the related offer, required if idOffer is null</param>
         /// <param name="referenceCustomer">(mandatory) reference of related customer</param>
         /// <param name="referenceCustomerBuyer">reference of related buyer, if the buyer is not the recipient of the subscription</param>
-        /// <param name="tryStart">if true, will check if the customer is billable. if he's not then an error is returned</param>
+        /// <param name="tryStart">if true, will force the start of the new subscription. An error is returned if the offer isn't free and the customer isn't billable.</param>
+        /// <param name="ensureBillable">if true, will check if the customer is billable. If he's not then an error is returned</param>
         /// <param name="dateStart">specify the subscription's start date</param>
         /// <param name="amountUpFront">Offer override - upfront amount </param>
         /// <param name="amountTrial">Offer override - trial period amount</param>
@@ -374,7 +375,7 @@ namespace ProAbono
         /// <param name="descriptionLocalized">Offer override - localized description</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        Subscription CreateSubscription(string referenceOffer, string referenceCustomer, string referenceCustomerBuyer = null, bool? tryStart = null, DateTime? dateStart = null, int? amountUpFront = null, int? amountTrial = null, TimeUnit? unitTrial = null, int? durationTrial = null, int? amountRecurrence = null, TimeUnit? unitRecurrence = null, int? durationRecurrence = null, int? countRecurrences = null, int? countMinRecurrences = null, int? amountTermination = null, string titleLocalized = null, string descriptionLocalized = null, bool? html = null);
+        Subscription CreateSubscription(string referenceOffer, string referenceCustomer, string referenceCustomerBuyer = null, bool? tryStart = null, bool? ensureBillable = null, DateTime? dateStart = null, int? amountUpFront = null, int? amountTrial = null, TimeUnit? unitTrial = null, int? durationTrial = null, int? amountRecurrence = null, TimeUnit? unitRecurrence = null, int? durationRecurrence = null, int? countRecurrences = null, int? countMinRecurrences = null, int? amountTermination = null, string titleLocalized = null, string descriptionLocalized = null, bool? html = null);
 
         /// <summary>
         /// Retrieve a subscription
@@ -431,13 +432,13 @@ namespace ProAbono
         Subscription UpgradeSubscription(long idSubscription, string referenceOffer, bool? html = null);
 
         /// <summary>
-        /// Change the renewal date of a subscription
+        /// Change the term date of a subscription
         /// </summary>
         /// <param name="idSubscription">id of the requested subscription</param>
-        /// <param name="dateRenewal">the updated renewal date. Must be in the future</param>
+        /// <param name="dateTerm">the updated term date. Must be in the future</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        Subscription UpdateSubscriptionRenewalDate(long idSubscription, DateTime dateRenewal, bool? html = null);
+        Subscription UpdateSubscriptionRenewalDate(long idSubscription, DateTime dateTerm, bool? html = null);
 
         /// <summary>
         /// Retrieve a list of subscriptions
@@ -798,7 +799,8 @@ namespace ProAbono
         /// <param name="referenceOffer">reference of the related offer, required if idOffer is null</param>
         /// <param name="referenceCustomer">(mandatory) reference of related customer</param>
         /// <param name="referenceCustomerBuyer">reference of related buyer, if the buyer is not the recipient of the subscription</param>
-        /// <param name="tryStart">if true, will check if the customer is billable. if he's not then an error is returned</param>
+        /// <param name="tryStart">if true, will force the start of the new subscription. An error is returned if the offer isn't free and the customer isn't billable.</param>
+        /// <param name="ensureBillable">if true, will check if the customer is billable. If he's not then an error is returned</param>
         /// <param name="dateStart">specify the subscription's start date</param>
         /// <param name="amountUpFront">Offer override - upfront amount </param>
         /// <param name="amountTrial">Offer override - trial period amount</param>
@@ -814,7 +816,7 @@ namespace ProAbono
         /// <param name="descriptionLocalized">Offer override - localized description</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        Task<Subscription> CreateSubscriptionAsync(string referenceOffer, string referenceCustomer, string referenceCustomerBuyer = null, bool? tryStart = null, DateTime? dateStart = null, int? amountUpFront = null, int? amountTrial = null, TimeUnit? unitTrial = null, int? durationTrial = null, int? amountRecurrence = null, TimeUnit? unitRecurrence = null, int? durationRecurrence = null, int? countRecurrences = null, int? countMinRecurrences = null, int? amountTermination = null, string titleLocalized = null, string descriptionLocalized = null, bool? html = null);
+        Task<Subscription> CreateSubscriptionAsync(string referenceOffer, string referenceCustomer, string referenceCustomerBuyer = null, bool? tryStart = null, bool? ensureBillable = null, DateTime? dateStart = null, int? amountUpFront = null, int? amountTrial = null, TimeUnit? unitTrial = null, int? durationTrial = null, int? amountRecurrence = null, TimeUnit? unitRecurrence = null, int? durationRecurrence = null, int? countRecurrences = null, int? countMinRecurrences = null, int? amountTermination = null, string titleLocalized = null, string descriptionLocalized = null, bool? html = null);
 
         /// <summary>
         /// Retrieve a subscription
@@ -871,13 +873,13 @@ namespace ProAbono
         Task<Subscription> UpgradeSubscriptionAsync(long idSubscription, string referenceOffer, bool? html = null);
 
         /// <summary>
-        /// Change the renewal date of a subscription
+        /// Change the term date of a subscription
         /// </summary>
         /// <param name="idSubscription">id of the requested subscription</param>
-        /// <param name="dateRenewal">the updated renewal date. Must be in the future</param>
+        /// <param name="dateTerm">the updated term date. Must be in the future</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        Task<Subscription> UpdateSubscriptionRenewalDateAsync(long idSubscription, DateTime dateRenewal, bool? html = null);
+        Task<Subscription> UpdateSubscriptionRenewalDateAsync(long idSubscription, DateTime dateTerm, bool? html = null);
 
         /// <summary>
         /// Retrieve a list of subscriptions
@@ -1766,7 +1768,8 @@ namespace ProAbono
         /// <param name="referenceOffer">reference of the related offer, required if idOffer is null</param>
         /// <param name="referenceCustomer">(mandatory) reference of related customer</param>
         /// <param name="referenceCustomerBuyer">reference of related buyer, if the buyer is not the recipient of the subscription</param>
-        /// <param name="tryStart">if true, will check if the customer is billable. if he's not then an error is returned</param>
+        /// <param name="tryStart">if true, will force the start of the new subscription. An error is returned if the offer isn't free and the customer isn't billable.</param>
+        /// <param name="ensureBillable">if true, will check if the customer is billable. If he's not then an error is returned</param>
         /// <param name="dateStart">specify the subscription's start date</param>
         /// <param name="amountUpFront">Offer override - upfront amount </param>
         /// <param name="amountTrial">Offer override - trial period amount</param>
@@ -1782,9 +1785,9 @@ namespace ProAbono
         /// <param name="descriptionLocalized">Offer override - localized description</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        public Subscription CreateSubscription(string referenceOffer, string referenceCustomer, string referenceCustomerBuyer = null, bool? tryStart = null, DateTime? dateStart = null, int? amountUpFront = null, int? amountTrial = null, TimeUnit? unitTrial = null, int? durationTrial = null, int? amountRecurrence = null, TimeUnit? unitRecurrence = null, int? durationRecurrence = null, int? countRecurrences = null, int? countMinRecurrences = null, int? amountTermination = null, string titleLocalized = null, string descriptionLocalized = null, bool? html = null)
+        public Subscription CreateSubscription(string referenceOffer, string referenceCustomer, string referenceCustomerBuyer = null, bool? tryStart = null, bool? ensureBillable = null, DateTime? dateStart = null, int? amountUpFront = null, int? amountTrial = null, TimeUnit? unitTrial = null, int? durationTrial = null, int? amountRecurrence = null, TimeUnit? unitRecurrence = null, int? durationRecurrence = null, int? countRecurrences = null, int? countMinRecurrences = null, int? amountTermination = null, string titleLocalized = null, string descriptionLocalized = null, bool? html = null)
         {
-            return this.CreateSubscriptionRequest(referenceOffer, referenceCustomer, referenceCustomerBuyer, tryStart, dateStart, amountUpFront, amountTrial, unitTrial, durationTrial, amountRecurrence, unitRecurrence, durationRecurrence, countRecurrences, countMinRecurrences, amountTermination, titleLocalized, descriptionLocalized, html).Execute();
+            return this.CreateSubscriptionRequest(referenceOffer, referenceCustomer, referenceCustomerBuyer, tryStart, ensureBillable, dateStart, amountUpFront, amountTrial, unitTrial, durationTrial, amountRecurrence, unitRecurrence, durationRecurrence, countRecurrences, countMinRecurrences, amountTermination, titleLocalized, descriptionLocalized, html).Execute();
         }
 
         /// <summary>
@@ -1793,7 +1796,8 @@ namespace ProAbono
         /// <param name="referenceOffer">reference of the related offer, required if idOffer is null</param>
         /// <param name="referenceCustomer">(mandatory) reference of related customer</param>
         /// <param name="referenceCustomerBuyer">reference of related buyer, if the buyer is not the recipient of the subscription</param>
-        /// <param name="tryStart">if true, will check if the customer is billable. if he's not then an error is returned</param>
+        /// <param name="tryStart">if true, will force the start of the new subscription. An error is returned if the offer isn't free and the customer isn't billable.</param>
+        /// <param name="ensureBillable">if true, will check if the customer is billable. If he's not then an error is returned</param>
         /// <param name="dateStart">specify the subscription's start date</param>
         /// <param name="amountUpFront">Offer override - upfront amount </param>
         /// <param name="amountTrial">Offer override - trial period amount</param>
@@ -1809,9 +1813,9 @@ namespace ProAbono
         /// <param name="descriptionLocalized">Offer override - localized description</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        public Task<Subscription> CreateSubscriptionAsync(string referenceOffer, string referenceCustomer, string referenceCustomerBuyer = null, bool? tryStart = null, DateTime? dateStart = null, int? amountUpFront = null, int? amountTrial = null, TimeUnit? unitTrial = null, int? durationTrial = null, int? amountRecurrence = null, TimeUnit? unitRecurrence = null, int? durationRecurrence = null, int? countRecurrences = null, int? countMinRecurrences = null, int? amountTermination = null, string titleLocalized = null, string descriptionLocalized = null, bool? html = null)
+        public Task<Subscription> CreateSubscriptionAsync(string referenceOffer, string referenceCustomer, string referenceCustomerBuyer = null, bool? tryStart = null, bool? ensureBillable = null, DateTime? dateStart = null, int? amountUpFront = null, int? amountTrial = null, TimeUnit? unitTrial = null, int? durationTrial = null, int? amountRecurrence = null, TimeUnit? unitRecurrence = null, int? durationRecurrence = null, int? countRecurrences = null, int? countMinRecurrences = null, int? amountTermination = null, string titleLocalized = null, string descriptionLocalized = null, bool? html = null)
         {
-            return this.CreateSubscriptionRequest(referenceOffer, referenceCustomer, referenceCustomerBuyer, tryStart, dateStart, amountUpFront, amountTrial, unitTrial, durationTrial, amountRecurrence, unitRecurrence, durationRecurrence, countRecurrences, countMinRecurrences, amountTermination, titleLocalized, descriptionLocalized, html).ExecuteAsync();
+            return this.CreateSubscriptionRequest(referenceOffer, referenceCustomer, referenceCustomerBuyer, tryStart, ensureBillable, dateStart, amountUpFront, amountTrial, unitTrial, durationTrial, amountRecurrence, unitRecurrence, durationRecurrence, countRecurrences, countMinRecurrences, amountTermination, titleLocalized, descriptionLocalized, html).ExecuteAsync();
         }
 
         /// <summary>
@@ -1959,27 +1963,27 @@ namespace ProAbono
         }
 
         /// <summary>
-        /// Change the renewal date of a subscription
+        /// Change the term date of a subscription
         /// </summary>
         /// <param name="idSubscription">id of the requested subscription</param>
-        /// <param name="dateRenewal">the updated renewal date. Must be in the future</param>
+        /// <param name="dateTerm">the updated term date. Must be in the future</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        public Subscription UpdateSubscriptionRenewalDate(long idSubscription, DateTime dateRenewal, bool? html = null)
+        public Subscription UpdateSubscriptionRenewalDate(long idSubscription, DateTime dateTerm, bool? html = null)
         {
-            return this.UpdateSubscriptionRenewalDateRequest(idSubscription, dateRenewal, html).Execute();
+            return this.UpdateSubscriptionRenewalDateRequest(idSubscription, dateTerm, html).Execute();
         }
 
         /// <summary>
-        /// Change the renewal date of a subscription
+        /// Change the term date of a subscription
         /// </summary>
         /// <param name="idSubscription">id of the requested subscription</param>
-        /// <param name="dateRenewal">the updated renewal date. Must be in the future</param>
+        /// <param name="dateTerm">the updated term date. Must be in the future</param>
         /// <param name="html">true to have the localized text as HTML string, false for plain text. Default is true</param>
         /// <returns>The related subscription</returns>
-        public Task<Subscription> UpdateSubscriptionRenewalDateAsync(long idSubscription, DateTime dateRenewal, bool? html = null)
+        public Task<Subscription> UpdateSubscriptionRenewalDateAsync(long idSubscription, DateTime dateTerm, bool? html = null)
         {
-            return this.UpdateSubscriptionRenewalDateRequest(idSubscription, dateRenewal, html).ExecuteAsync();
+            return this.UpdateSubscriptionRenewalDateRequest(idSubscription, dateTerm, html).ExecuteAsync();
         }
 
         /// <summary>
