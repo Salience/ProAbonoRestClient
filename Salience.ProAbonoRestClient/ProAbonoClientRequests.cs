@@ -6,6 +6,7 @@ using System.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
+using RestSharp.Authenticators;
 using Salience.FluentApi;
 using Salience.FluentApi.Internal;
 
@@ -165,7 +166,7 @@ namespace ProAbono
             Guard.NotNull(customerInfo, "customerInfo");
 
             return To("create a customer")
-                .Post("/v1/Customer", r => r.AddBody(new
+                .Post("/v1/Customer", r => r.AddJsonBody(new
                 {
                     ReferenceSegment = referenceSegment,
                     ReferenceCustomer = referenceCustomer,
@@ -258,7 +259,7 @@ namespace ProAbono
             return To("update a billing address")
                 .Post("/v1/CustomerBillingAddress", r => r
                     .AddParameter("ReferenceCustomer", referenceCustomer, ParameterType.QueryString)
-                    .AddBody(billingAddress))
+                    .AddJsonBody(billingAddress))
                 .Expecting<Address>();
         }
 
@@ -290,7 +291,7 @@ namespace ProAbono
             return To("update a shipping address")
                 .Post("/v1/CustomerShippingAddress", r => r
                     .AddParameter("ReferenceCustomer", referenceCustomer, ParameterType.QueryString)
-                    .AddBody(shippingAddress))
+                    .AddJsonBody(shippingAddress))
                 .Expecting<Address>();
         }
 
@@ -322,7 +323,7 @@ namespace ProAbono
             return To("update payment settings")
                 .Post("/v1/CustomerSettingsPayment", r => r
                     .AddParameter("ReferenceCustomer", referenceCustomer, ParameterType.QueryString)
-                    .AddBody(settings))
+                    .AddJsonBody(settings))
                 .Expecting<PaymentSettings>();
         }
         #endregion
@@ -442,7 +443,7 @@ namespace ProAbono
 
             return To("update usage by increment")
                 .Post("/v1/Usage", r => r
-                    .AddBody(new
+                    .AddJsonBody(new
                     {
                         ReferenceFeature = referenceFeature,
                         ReferenceCustomer = referenceCustomer,
@@ -469,7 +470,7 @@ namespace ProAbono
 
             return To("update usage by current quantity")
                 .Post("/v1/Usage", r => r
-                    .AddBody(new
+                    .AddJsonBody(new
                     {
                         ReferenceFeature = referenceFeature,
                         ReferenceCustomer = referenceCustomer,
@@ -496,7 +497,7 @@ namespace ProAbono
 
             return To("update usage of onoff feature")
                 .Post("/v1/Usage", r => r
-                    .AddBody(new
+                    .AddJsonBody(new
                     {
                         ReferenceFeature = referenceFeature,
                         ReferenceCustomer = referenceCustomer,
@@ -526,7 +527,7 @@ namespace ProAbono
 
             return To("estimate pricing of an usage update")
                 .Post("/v1/PricingUsage", r => r
-                    .AddBody(new
+                    .AddJsonBody(new
                     {
                         ReferenceFeature = referenceFeature,
                         ReferenceCustomer = referenceCustomer,
@@ -555,7 +556,7 @@ namespace ProAbono
 
             return To("estimate pricing of an usage update")
                 .Post("/v1/PricingUsage", r => r
-                    .AddBody(new
+                    .AddJsonBody(new
                     {
                         ReferenceFeature = referenceFeature,
                         ReferenceCustomer = referenceCustomer,
@@ -584,7 +585,7 @@ namespace ProAbono
 
             return To("estimate pricing of an usage update")
                 .Post("/v1/PricingUsage", r => r
-                    .AddBody(new
+                    .AddJsonBody(new
                     {
                         ReferenceFeature = referenceFeature,
                         ReferenceCustomer = referenceCustomer,
@@ -627,7 +628,7 @@ namespace ProAbono
 
             return To("estimate pricing of a subscription upgrade")
                 .Post("/v1/PricingSubscription", r => r
-                    .AddBody(new
+                    .AddJsonBody(new
                     {
                         ReferenceCustomer = referenceCustomer,
                         ReferenceOffer = referenceOffer,
@@ -844,7 +845,7 @@ namespace ProAbono
                 .Post("/v1/Subscription", r => r
                     .AddParameter("tryStart", tryStart, ParameterType.QueryString)
                     .AddParameter("ensureBillable", ensureBillable, ParameterType.QueryString)
-                    .AddBody(new
+                    .AddJsonBody(new
                 {
                     ReferenceCustomer = referenceCustomer,
                     ReferenceOffer = referenceOffer,
