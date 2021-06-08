@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31025.194
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salience.ProAbonoRestClient", "Salience.ProAbonoRestClient\Salience.ProAbonoRestClient.csproj", "{5D835B97-71CF-466A-A20B-6978000CB328}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Salience.ProAbonoRestClient", "Salience.ProAbonoRestClient\Salience.ProAbonoRestClient.csproj", "{1A403C71-2698-495D-8980-E1A81B8178F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,12 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5D835B97-71CF-466A-A20B-6978000CB328}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5D835B97-71CF-466A-A20B-6978000CB328}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5D835B97-71CF-466A-A20B-6978000CB328}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5D835B97-71CF-466A-A20B-6978000CB328}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A403C71-2698-495D-8980-E1A81B8178F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A403C71-2698-495D-8980-E1A81B8178F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A403C71-2698-495D-8980-E1A81B8178F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A403C71-2698-495D-8980-E1A81B8178F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E58C5370-4706-48CF-8B84-1BBF1A56309D}
 	EndGlobalSection
 EndGlobal
