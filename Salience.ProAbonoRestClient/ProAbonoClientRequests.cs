@@ -985,8 +985,8 @@ namespace ProAbono
             return To("change the renewal date of a subscription")
                 .Post("/v1/Subscription/{IdSubscription}/DateTerm", r => r
                     .AddParameter("IdSubscription", idSubscription, ParameterType.UrlSegment)
-                    .AddParameter("DateTerm", dateTerm, ParameterType.QueryString)
-                    .AddParameter("Html", html, ParameterType.QueryString))
+                    .AddParameter("Html", html, ParameterType.QueryString)
+                    .AddJsonBody(new { DateTerm = dateTerm }))
                 .Expecting<Subscription>();
         }
 
