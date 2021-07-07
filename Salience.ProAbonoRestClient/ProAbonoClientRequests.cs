@@ -326,6 +326,21 @@ namespace ProAbono
                     .AddJsonBody(settings))
                 .Expecting<PaymentSettings>();
         }
+
+        /// <summary>
+        /// Anonymize a Customer
+        /// </summary>
+        /// <param name="referenceCustomer">reference of the customer</param>
+        /// <returns>The updated customer</returns>
+        private IExecutableRequest<Customer> AnonymizeCustomerRequest(string referenceCustomer)
+        {
+            Guard.NotNullOrEmpty(referenceCustomer, "referenceCustomer");
+
+            return To("anonymize a customer")
+                .Post("/v1/Customer/Anonymization", r => r.AddParameter("ReferenceCustomer", referenceCustomer, ParameterType.QueryString))
+                .Expecting<Customer>();
+        }
+
         #endregion
 
         #region Usages
