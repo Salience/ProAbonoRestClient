@@ -99,6 +99,8 @@ namespace <#= targetNamespace #>
 {
     public interface <#= targetInterfaceSync #>
     {
+        <#= targetInterfaceAsync #> Async { get; }
+
 <#
 foreach(var method in methods) 
 {
@@ -109,6 +111,8 @@ foreach(var method in methods)
 
     public interface <#= targetInterfaceAsync #>
     {
+        <#= targetInterfaceSync #> Sync { get; }
+
 <#
 foreach(var method in methods)
 {
@@ -119,6 +123,9 @@ foreach(var method in methods)
 
     public partial class <#= targetClass #> : <#= targetInterfaceSync #>, <#= targetInterfaceAsync #>
     {
+        <#= targetInterfaceAsync #> <#= targetInterfaceSync #>.Async => this;
+        <#= targetInterfaceSync #> <#= targetInterfaceAsync #>.Sync => this;
+
 <#
 foreach(var method in methods)
 {
