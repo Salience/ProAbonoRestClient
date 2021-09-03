@@ -10,10 +10,11 @@
     <Company>Salience</Company>
     <Copyright>Copyright © 2021</Copyright>
     <PackageProjectUrl>https://github.com/Salience/ProAbonoRestClient</PackageProjectUrl>
+    <UserSecretsId>76818dcd-5be4-4b2b-a34f-20c6fec605f2</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Salience.FluentApi" Version="1.13.1" />
+    <PackageReference Include="Salience.FluentApi" Version="1.13.2" />
   </ItemGroup>
 
   <ItemGroup>
