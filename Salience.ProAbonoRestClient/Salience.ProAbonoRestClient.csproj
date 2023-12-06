@@ -5,10 +5,10 @@
     <RootNamespace>Salience.ProAbonoRestClient</RootNamespace>
     <AssemblyName>Salience.ProAbonoRestClient</AssemblyName>
     <AssemblyVersion>1.2.1.0</AssemblyVersion>
-    <Version>1.2.1</Version>
+    <Version>1.3.1</Version>
     <Authors>Julien Patte</Authors>
     <Company>Salience</Company>
-    <Copyright>Copyright © 2021</Copyright>
+    <Copyright>Copyright © 2023</Copyright>
     <PackageProjectUrl>https://github.com/Salience/ProAbonoRestClient</PackageProjectUrl>
     <UserSecretsId>76818dcd-5be4-4b2b-a34f-20c6fec605f2</UserSecretsId>
   </PropertyGroup>
