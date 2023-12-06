@@ -14,6 +14,7 @@ namespace ProAbono
         public string ReferenceOffer { get; set; }
         public string ReferenceCustomer { get; set; }
         public string ReferenceCustomerBuyer { get; set; }
+        public string Status { get; set; }
         public string StateSubscription { get; set; }
         public DateTime? DateStart { get; set; }
         public DateTime? DatePeriodStart { get; set; }
