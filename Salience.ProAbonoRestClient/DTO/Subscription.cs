@@ -20,6 +20,7 @@ namespace ProAbono
         public DateTime? DatePeriodStart { get; set; }
         public DateTime? DatePeriodEnd { get; set; }
         public DateTime? DateTerm { get; set; }
+        public string StatusAfterTerm { get; set; }
         public string StateSubscriptionAfterTerm { get; set; }
         public bool IsTrial { get; set; }
         public bool IsEngaged { get; set; }
